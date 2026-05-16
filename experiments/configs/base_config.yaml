@@ -1,0 +1,46 @@
+# NeuralDelta Base Configuration
+# All hyperparameters for the PINN training pipeline
+# Modify this file for each experiment — do not hardcode values in scripts
+
+experiment:
+  name: "neuraldelta_base"
+  seed: 42
+  flood_events:
+    - "ulysses_2020"
+    - "lawin_2016"
+    - "mangkhut_2018"
+
+domain:
+  resolution_m: 100          # Spatial resolution in meters
+  time_window_hours: 48      # Training time window
+
+architecture:
+  hidden_layers: 5           # Candidate: 3, 5, 7
+  neurons_per_layer: 128
+  activation: "tanh"
+  initialization: "xavier_uniform"
+  dropout_rate: 0.2          # For Monte Carlo Dropout
+
+collocation:
+  n_points: 10000            # Candidate: 1000, 5000, 10000
+  sampling: "latin_hypercube"
+
+loss_weights:
+  lambda_pde: 1.0            # Physics residual weight (fixed)
+  lambda_bc: 1.0             # Boundary condition weight (fixed)
+  lambda_ic: 1.0             # Initial condition weight (fixed)
+  lambda_data: 0.5           # SAR observation weight (ablation: 0, 0.1, 0.5, 1.0)
+
+training:
+  epochs_adam: 20000
+  epochs_lbfgs: 5000
+  learning_rate_adam: 0.001
+  log_interval: 500          # Log loss every N epochs
+  checkpoint_interval: 1000  # Save weights every N epochs
+
+uncertainty:
+  mc_dropout_samples: 200    # T forward passes
+  credible_interval: 0.95
+
+manning_n: 0.035             # Manning's roughness coefficient
+flood_depth_threshold: 0.30  # Binary flood classification threshold (meters)

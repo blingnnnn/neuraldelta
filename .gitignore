@@ -1,0 +1,26 @@
+# Raw data — too large for GitHub, documented separately
+data/raw/
+
+# Large processed outputs
+data/processed/collocation/*.npy
+outputs/checkpoints/*.pt
+
+# MLflow experiment database
+mlruns/
+
+# Python cache
+__pycache__/
+*.py[cod]
+*.pyo
+.ipynb_checkpoints/
+
+# Environment files
+.env
+*.env
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Jupyter checkpoints
+.ipynb_checkpoints/
